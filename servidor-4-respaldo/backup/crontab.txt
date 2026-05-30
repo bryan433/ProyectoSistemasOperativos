@@ -1,0 +1,15 @@
+# =============================================================
+#  crontab.txt — Programación del respaldo automático
+#  Por defecto: cada hora (minuto 0 de cada hora)
+#  Para cambiar la frecuencia, editar la expresión cron.
+#
+#  Formato: minuto hora día-mes mes día-semana comando
+#
+#  Ejemplos:
+#    0 * * * *    → Cada hora
+#    */30 * * * * → Cada 30 minutos
+#    0 */2 * * *  → Cada 2 horas
+#    0 2 * * *    → Todos los días a las 2 AM
+# =============================================================
+
+0 * * * * root /usr/local/bin/backup.sh >> /backups/backup.log 2>&1

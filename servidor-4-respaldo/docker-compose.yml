@@ -1,0 +1,50 @@
+version: "3.9"
+
+# =============================================================
+#  SERVIDOR 4 — RESPALDO DE BASE DE DATOS
+#  Contenedor que ejecuta pg_dump automáticamente cada hora
+#  y guarda los volcados en ./backups/ (carpeta local).
+#
+#  PREREQUISITO: El Servidor 3 (postgres-primary) debe estar
+#  corriendo y accesible en la IP/hostname configurado abajo.
+#
+#  Uso:
+#    docker-compose up -d
+# =============================================================
+
+networks:
+  red_respaldo:
+    driver: bridge
+
+volumes:
+  backup_data:
+
+services:
+
+  # -----------------------------------------------------------
+  #  CONTENEDOR 13 — Respaldo Automatizado
+  #  Usa pg_dump + cron para extraer volcados periódicos
+  # -----------------------------------------------------------
+  backup-service:
+    build:
+      context: ./backup
+      dockerfile: Dockerfile
+    container_name: c13_backup_service
+    restart: unless-stopped
+    environment:
+      # Dirección del Servidor 3 (postgres-primary)
+      # En demo de una sola máquina: usar host.docker.internal
+      # En demo multi-máquina: usar la IP local del servidor 3
+      DB_HOST: host.docker.internal
+      DB_PORT: 5432
+      DB_USER: admin_salud
+      DB_PASSWORD: SaludSegura2025!
+      # Bases de datos a respaldar (separadas por coma)
+      DB_NAMES: db_pagos_atencion,db_medico
+      # Intervalo en minutos entre cada respaldo
+      BACKUP_INTERVAL_MINUTES: 60
+    volumes:
+      - backup_data:/backups                  # Volumen persistente con los .sql
+      - ./backups:/backups-local              # Carpeta local accesible desde el host
+    networks:
+      - red_respaldo
