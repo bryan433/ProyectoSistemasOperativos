@@ -1,0 +1,87 @@
+version: "3.9"
+
+# =============================================================
+#  SERVIDOR 1 — SERVIDOR DE APLICACIÓN PRINCIPAL
+#  Levanta:
+#    - firewall             : Contenedor 1 (Nginx Reverse Proxy)
+#    - frontend-unificado   : Contenedor 2 (React App)
+#    - backend-pagos        : Contenedor 3 (Node API Pagos/Tickets)
+#    - backend-ficha-medica : Contenedor 5 (Node API Ficha Médica)
+# =============================================================
+
+networks:
+  red_app:
+    driver: bridge
+  red_datos:
+    external: true
+    name: servidor-3-datos_red_datos
+
+services:
+
+  # -----------------------------------------------------------
+  #  CONTENEDOR 1 — Firewall (Proxy Inverso Nginx)
+  #  Única puerta de entrada. Bloquea el resto.
+  # -----------------------------------------------------------
+  firewall:
+    image: nginx:alpine
+    container_name: c1_firewall
+    restart: unless-stopped
+    ports:
+      - "80:80"   # Expuesto para acceso de usuarios
+    # volumes:
+    #   - ./firewall/nginx.conf:/etc/nginx/nginx.conf:ro
+    networks:
+      - red_app
+    depends_on:
+      - frontend-unificado
+      - backend-pagos
+      - backend-ficha-medica
+
+  # -----------------------------------------------------------
+  #  CONTENEDOR 2 — Frontend Unificado (React/Vite)
+  # -----------------------------------------------------------
+  frontend-unificado:
+    build:
+      context: ./frontend-unificado
+      dockerfile: Dockerfile
+    container_name: c2_frontend_unificado
+    restart: unless-stopped
+    ports:
+      - "5173:5173"  # Lo abrimos directamente al host para demo rápida (luego puede ir solo por Nginx)
+    networks:
+      - red_app
+
+  # -----------------------------------------------------------
+  #  CONTENEDOR 3 — Backend Módulo Pagos y Tickets
+  # -----------------------------------------------------------
+  backend-pagos:
+    image: node:20-alpine
+    # build: ./backend-pagos-ticket
+    container_name: c3_backend_pagos
+    restart: unless-stopped
+    command: sh -c "echo 'Backend Pagos placeholder' && tail -f /dev/null" # Placeholder temporal
+    environment:
+      - PORT=3001
+      - DATABASE_URL=postgresql://admin_salud:SaludSegura2025!@postgres-primary:5432/db_pagos_atencion
+    networks:
+      - red_app
+      - red_datos
+
+  # -----------------------------------------------------------
+  #  CONTENEDOR 5 — Backend Ficha Médica
+  # -----------------------------------------------------------
+  backend-ficha-medica:
+    build:
+      context: ./backend-ficha-medica
+      dockerfile: Dockerfile
+    container_name: c5_backend_ficha_medica
+    restart: unless-stopped
+    ports:
+      - "3002:3002"
+    environment:
+      - PORT=3002
+      # Asumiendo que el Servidor 3 corre en localhost/host del mismo sistema físico
+      - DATABASE_URL=postgresql://admin_salud:SaludSegura2025!@postgres-primary:5432/db_medico
+    networks:
+      - red_app
+      - red_datos
