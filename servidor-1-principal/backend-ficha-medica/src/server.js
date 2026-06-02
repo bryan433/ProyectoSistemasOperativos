@@ -4,8 +4,8 @@ const http = require('http');
 const { Server } = require('socket.io');
 require('dotenv').config();
 
-const fichaRoutes = require('./routes/fichaRoutes');
-const fichaService = require('./services/fichaService');
+const fichaRoutes = require('./routes/ficha.routes');
+const fichaService = require('./services/ficha.Service');
 
 const app = express();
 const server = http.createServer(app);

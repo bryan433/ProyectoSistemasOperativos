@@ -1,58 +1,36 @@
-import { useState } from 'react'
-import './App.css'
+import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
+import AtencionPage from './pages/AtencionPage';
+import MedicoPage from './pages/MedicoPage';
+import './index.css';
 
 function App() {
-  const [fichas, setFichas] = useState(null)
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState(null)
-
-  const fetchFichas = async () => {
-    setLoading(true)
-    setError(null)
-    try {
-      // Llamada al Contenedor 5 (Backend Ficha Médica) a través de Nginx (o directo para demo)
-      // En demo local sin Nginx aún, apuntamos al localhost:3002
-      const response = await fetch('http://localhost:3002/api/fichas')
-      if (!response.ok) throw new Error('Error en la respuesta del servidor')
-      const data = await response.json()
-      setFichas(data)
-    } catch (err) {
-      setError(err.message)
-    } finally {
-      setLoading(false)
-    }
-  }
-
   return (
-    <div className="container">
-      <h1>Módulo Médico</h1>
-      <p>Interfaz simple para pruebas de conexión con el Backend Ficha Médica</p>
-      
-      <button 
-        className="action-btn" 
-        onClick={fetchFichas}
-        disabled={loading}
-      >
-        {loading ? 'Consultando...' : 'Obtener Fichas Médicas'}
-      </button>
+    <BrowserRouter>
+      <div className="min-h-screen bg-[#f6faff] text-[#141d23]">
+        <nav className="bg-white border-b border-[#c2c6d4]">
+          <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+            <h1 className="text-xl font-bold text-[#003f87]">MedCenter</h1>
 
-      {error && (
-        <div className="result-card" style={{borderColor: '#ef4444'}}>
-          <h3 style={{color: '#ef4444'}}>Error</h3>
-          <p>{error}</p>
-        </div>
-      )}
+            <div className="flex gap-6">
+              <Link className="font-semibold text-[#003f87]" to="/">
+                Atención
+              </Link>
+              <Link className="font-semibold text-[#003f87]" to="/medico">
+                Médico
+              </Link>
+            </div>
+          </div>
+        </nav>
 
-      {fichas && !error && (
-        <div className="result-card">
-          <h3>Resultados de la BD:</h3>
-          <pre>
-            {JSON.stringify(fichas, null, 2)}
-          </pre>
-        </div>
-      )}
-    </div>
-  )
+        <main className="max-w-6xl mx-auto px-6 py-8">
+          <Routes>
+            <Route path="/" element={<AtencionPage />} />
+            <Route path="/medico" element={<MedicoPage />} />
+          </Routes>
+        </main>
+      </div>
+    </BrowserRouter>
+  );
 }
 
-export default App
+export default App;

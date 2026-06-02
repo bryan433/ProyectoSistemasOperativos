@@ -1,4 +1,4 @@
-const fichaService = require('../services/fichaService');
+const fichaService = require('../services/ficha.Service');
 
 const obtenerTodasLasFichas = async (req, res) => {
     try {

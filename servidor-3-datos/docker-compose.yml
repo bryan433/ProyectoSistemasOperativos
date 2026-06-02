@@ -39,7 +39,7 @@ services:
       REPLICATION_USER: replicador
       REPLICATION_PASSWORD: ReplPass2025!
     ports:
-      - "5432:5432"                          # Expuesto al host para que las APIs lo consuman
+      - "15432:5432"                         # Puerto alto para evitar conflictos locales; internamente sigue siendo 5432
     volumes:
       - pgdata_primary:/var/lib/postgresql/data
       - ./postgres-primary/init:/docker-entrypoint-initdb.d  # Scripts de inicialización
