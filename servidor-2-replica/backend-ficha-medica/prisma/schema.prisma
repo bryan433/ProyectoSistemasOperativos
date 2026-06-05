@@ -1,0 +1,103 @@
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "linux-musl-openssl-3.0.x"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Paciente {
+  id               Int           @id @default(autoincrement())
+  nombre           String        @db.VarChar(100)
+  apellido         String        @db.VarChar(100)
+  cedula           String        @unique @db.VarChar(20)
+  fecha_nacimiento DateTime?     @db.Date
+  telefono         String?       @db.VarChar(20)
+  correo           String?       @db.VarChar(150)
+  tipo_sangre      String?       @db.VarChar(5)
+  alergias         String?
+  created_at       DateTime?     @default(now()) @db.Timestamptz(6)
+  updated_at       DateTime?     @default(now()) @db.Timestamptz(6)
+  ficha_medica     FichaMedica?
+  consultas        Consulta[]
+
+  @@map("pacientes")
+}
+
+model Medico {
+  id           Int        @id @default(autoincrement())
+  nombre       String     @db.VarChar(100)
+  apellido     String     @db.VarChar(100)
+  especialidad String     @db.VarChar(100)
+  cedula_prof  String     @unique @db.VarChar(50)
+  correo       String?    @db.VarChar(150)
+  created_at   DateTime?  @default(now()) @db.Timestamptz(6)
+  consultas    Consulta[]
+
+  @@map("medicos")
+}
+
+model FichaMedica {
+  id               Int       @id @default(autoincrement())
+  paciente_id      Int       @unique
+  antecedentes     String?
+  antecedentes_fam String?
+  created_at       DateTime? @default(now()) @db.Timestamptz(6)
+  updated_at       DateTime? @default(now()) @db.Timestamptz(6)
+  paciente         Paciente  @relation(fields: [paciente_id], references: [id], onDelete: Cascade)
+
+  @@map("fichas_medicas")
+}
+
+model Consulta {
+  id                   Int                     @id @default(autoincrement())
+  paciente_id          Int
+  medico_id            Int
+  fecha_consulta       DateTime?               @default(now()) @db.Timestamptz(6)
+  presion_arterial     String?                 @db.VarChar(20)
+  temperatura          Decimal?                @db.Decimal(4, 1)
+  frecuencia_cardiaca  Int?
+  peso                 Decimal?                @db.Decimal(5, 2)
+  altura               Decimal?                @db.Decimal(4, 2)
+  motivo_consulta      String
+  sintomas             String?
+  diagnostico          String?
+  tratamiento          String?
+  observaciones        String?
+  requiere_seguimiento Boolean?                @default(false)
+  fecha_siguiente_cita DateTime?               @db.Date
+  medico               Medico                  @relation(fields: [medico_id], references: [id], onDelete: Restrict)
+  paciente             Paciente                @relation(fields: [paciente_id], references: [id], onDelete: Cascade)
+  examenes             ExamenSolicitado[]
+  medicamentos         MedicamentoRecetado[]
+
+  @@map("consultas")
+}
+
+model MedicamentoRecetado {
+  id            Int      @id @default(autoincrement())
+  consulta_id   Int
+  nombre        String   @db.VarChar(150)
+  dosis         String   @db.VarChar(100)
+  frecuencia    String   @db.VarChar(100)
+  duracion      String?  @db.VarChar(100)
+  instrucciones String?
+  consulta      Consulta @relation(fields: [consulta_id], references: [id], onDelete: Cascade)
+
+  @@map("medicamentos_recetados")
+}
+
+model ExamenSolicitado {
+  id              Int       @id @default(autoincrement())
+  consulta_id     Int
+  tipo_examen     String    @db.VarChar(150)
+  indicaciones    String?
+  resultado       String?
+  fecha_resultado DateTime? @db.Date
+  estado          String?   @default("pendiente") @db.VarChar(20)
+  consulta        Consulta  @relation(fields: [consulta_id], references: [id], onDelete: Cascade)
+
+  @@map("examenes_solicitados")
+}

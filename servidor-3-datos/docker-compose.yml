@@ -1,14 +1,11 @@
 version: "3.9"
 
-# =============================================================
 #  SERVIDOR 3 — CAPA DE DATOS CENTRALIZADA
-#  Levanta:
-#    - postgres-primary  : BD principal (lectura/escritura)
-#    - postgres-replica  : BD réplica en hot-standby (solo lectura)
-#
-#  Uso:
-#    docker-compose up -d
-# =============================================================
+#  postgres-primary: BD principal (lectura/escritura)
+#  postgres-replica: BD réplica en hot-standby (solo lectura)
+
+#  Para ejecutar correr el comando
+#  docker-compose up -d
 
 networks:
   red_datos:
@@ -20,12 +17,10 @@ volumes:
 
 services:
 
-  # -----------------------------------------------------------
-  #  CONTENEDOR 11 — Base de Datos Principal
+  #  Base de Datos Principal
   #  Aloja dos bases de datos lógicas:
-  #    - db_pagos_atencion  (módulo Pagos y Tickets)
-  #    - db_medico          (módulo Ficha Médica)
-  # -----------------------------------------------------------
+  #  db_pagos_atencion (módulo Pagos y Tickets)
+  #  db_medico (módulo Ficha Médica)
   postgres-primary:
     build:
       context: ./postgres-primary
@@ -35,27 +30,25 @@ services:
     environment:
       POSTGRES_USER: admin_salud
       POSTGRES_PASSWORD: SaludSegura2025!
-      POSTGRES_DB: db_pagos_atencion        # DB creada por defecto; la segunda se crea en init.sql
+      POSTGRES_DB: db_pagos_atencion
       REPLICATION_USER: replicador
       REPLICATION_PASSWORD: ReplPass2025!
     ports:
-      - "15432:5432"                         # Puerto alto para evitar conflictos locales; internamente sigue siendo 5432
+      - "15432:5432"
     volumes:
       - pgdata_primary:/var/lib/postgresql/data
-      - ./postgres-primary/init:/docker-entrypoint-initdb.d  # Scripts de inicialización
+      - ./postgres-primary/init:/docker-entrypoint-initdb.d
     networks:
       - red_datos
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U admin_salud -d db_pagos_atencion"]
+      test: [ "CMD-SHELL", "pg_isready -U admin_salud -d db_pagos_atencion" ]
       interval: 10s
       timeout: 5s
       retries: 5
 
-  # -----------------------------------------------------------
-  #  CONTENEDOR 12 — Base de Datos Réplica (Solo Lectura)
+  #  Base de Datos Réplica (Solo Lectura)
   #  Se sincroniza automáticamente con postgres-primary
   #  mediante Streaming Replication de PostgreSQL.
-  # -----------------------------------------------------------
   postgres-replica:
     build:
       context: ./postgres-replica
@@ -70,7 +63,7 @@ services:
       REPLICATION_USER: replicador
       REPLICATION_PASSWORD: ReplPass2025!
     ports:
-      - "5434:5432"                          # Puerto diferente para evitar conflicto (cambiado de 5433 a 5434)
+      - "5434:5432"
     volumes:
       - pgdata_replica:/var/lib/postgresql/data
     networks:
