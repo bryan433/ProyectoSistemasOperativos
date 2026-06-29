@@ -33,6 +33,7 @@ const crearConsulta = async (datos) => {
     const { 
         paciente_id, 
         medico_id, 
+        paciente_data,
         motivo_consulta, 
         sintomas, 
         diagnostico, 
@@ -45,6 +46,23 @@ const crearConsulta = async (datos) => {
         medicamentos, // Array opcional
         examenes // Array opcional
     } = datos;
+
+    if (paciente_data) {
+        await prisma.paciente.upsert({
+            where: { id: parseInt(paciente_id) },
+            update: {
+                nombre: paciente_data.nombre,
+                apellido: paciente_data.apellido,
+                cedula: paciente_data.cedula
+            },
+            create: {
+                id: parseInt(paciente_id),
+                nombre: paciente_data.nombre,
+                apellido: paciente_data.apellido,
+                cedula: paciente_data.cedula
+            }
+        });
+    }
 
     return await prisma.consulta.create({
         data: {

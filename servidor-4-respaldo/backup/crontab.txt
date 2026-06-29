@@ -12,4 +12,4 @@
 #    0 2 * * *    → Todos los días a las 2 AM
 # =============================================================
 
-0 * * * * root /usr/local/bin/backup.sh >> /backups/backup.log 2>&1
+0 * * * * /usr/local/bin/backup.sh >> /backups/backup.log 2>&1

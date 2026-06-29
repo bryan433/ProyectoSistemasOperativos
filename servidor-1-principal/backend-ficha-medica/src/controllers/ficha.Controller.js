@@ -23,10 +23,12 @@ const obtenerFichaPorPaciente = async (req, res) => {
 };
 
 const crearConsulta = async (req, res) => {
+    console.log("RECIBIENDO REQUEST EN CREAR CONSULTA:", req.body);
     try {
         const nuevaConsulta = await fichaService.crearConsulta(req.body);
         res.status(201).json(nuevaConsulta);
     } catch (error) {
+        console.error("ERROR CREANDO CONSULTA:", error);
         res.status(500).json({ error: 'Error al crear consulta médica', details: error.message });
     }
 };

@@ -1,73 +1,108 @@
-version: "3.9"
-
-#  SERVIDOR 3 — CAPA DE DATOS CENTRALIZADA
-#  postgres-primary: BD principal (lectura/escritura)
-#  postgres-replica: BD réplica en hot-standby (solo lectura)
-
-#  Para ejecutar correr el comando
-#  docker-compose up -d
+#  SERVIDOR 3 — CAPA DE DATOS CENTRALIZADA (ALTA DISPONIBILIDAD)
+#  etcd: Distributed Configuration Store
+#  patroni1 & patroni2: Nodos de PostgreSQL gestionados por Patroni
+#  haproxy: Enrutador Inteligente (Punto de entrada)
+#  db-init: Contenedor efímero para crear esquemas iniciales
 
 networks:
   red_datos:
     driver: bridge
 
 volumes:
-  pgdata_primary:
-  pgdata_replica:
+  etcd_data:
+  pgdata1:
+  pgdata2:
 
 services:
-
-  #  Base de Datos Principal
-  #  Aloja dos bases de datos lógicas:
-  #  db_pagos_atencion (módulo Pagos y Tickets)
-  #  db_medico (módulo Ficha Médica)
-  postgres-primary:
-    build:
-      context: ./postgres-primary
-      dockerfile: Dockerfile
-    container_name: c11_postgres_primary
+  # 1. Distributed Configuration Store (DCS)
+  etcd:
+    image: quay.io/coreos/etcd:v3.5.0
+    container_name: c10_etcd
+    command: /usr/local/bin/etcd --name etcd --advertise-client-urls http://etcd:2379 --listen-client-urls http://0.0.0.0:2379 --initial-advertise-peer-urls http://etcd:2380 --listen-peer-urls http://0.0.0.0:2380 --initial-cluster etcd=http://etcd:2380 --data-dir /etcd-data
     restart: unless-stopped
-    environment:
-      POSTGRES_USER: admin_salud
-      POSTGRES_PASSWORD: SaludSegura2025!
-      POSTGRES_DB: db_pagos_atencion
-      REPLICATION_USER: replicador
-      REPLICATION_PASSWORD: ReplPass2025!
     ports:
-      - "15432:5432"
+      - "2379:2379"
+      - "2380:2380"
     volumes:
-      - pgdata_primary:/var/lib/postgresql/data
-      - ./postgres-primary/init:/docker-entrypoint-initdb.d
+      - etcd_data:/etcd-data
     networks:
       - red_datos
-    healthcheck:
-      test: [ "CMD-SHELL", "pg_isready -U admin_salud -d db_pagos_atencion" ]
-      interval: 10s
-      timeout: 5s
-      retries: 5
 
-  #  Base de Datos Réplica (Solo Lectura)
-  #  Se sincroniza automáticamente con postgres-primary
-  #  mediante Streaming Replication de PostgreSQL.
-  postgres-replica:
+  # 2. Nodo 1 (PostgreSQL + Patroni)
+  patroni1:
     build:
-      context: ./postgres-replica
+      context: ./patroni-node
       dockerfile: Dockerfile
-    container_name: c12_postgres_replica
+    container_name: c11_patroni1
     restart: unless-stopped
     environment:
-      PGUSER: replicador
-      PGPASSWORD: ReplPass2025!
-      PRIMARY_HOST: postgres-primary
-      PRIMARY_PORT: 5432
+      PATRONI_NAME: patroni1
+      ETCD_HOST: etcd:2379
+      PATRONI_POSTGRES_LISTEN: 0.0.0.0:5432
+      PATRONI_RESTAPI_LISTEN: 0.0.0.0:8008
+      POSTGRES_USER: admin_salud
+      POSTGRES_PASSWORD: SaludSegura2025!
       REPLICATION_USER: replicador
       REPLICATION_PASSWORD: ReplPass2025!
-    ports:
-      - "5434:5432"
     volumes:
-      - pgdata_replica:/var/lib/postgresql/data
+      - pgdata1:/var/lib/postgresql/data
     networks:
       - red_datos
     depends_on:
-      postgres-primary:
-        condition: service_healthy
+      - etcd
+
+  # 3. Nodo 2 (PostgreSQL + Patroni)
+  patroni2:
+    build:
+      context: ./patroni-node
+      dockerfile: Dockerfile
+    container_name: c12_patroni2
+    restart: unless-stopped
+    environment:
+      PATRONI_NAME: patroni2
+      ETCD_HOST: etcd:2379
+      PATRONI_POSTGRES_LISTEN: 0.0.0.0:5432
+      PATRONI_RESTAPI_LISTEN: 0.0.0.0:8008
+      POSTGRES_USER: admin_salud
+      POSTGRES_PASSWORD: SaludSegura2025!
+      REPLICATION_USER: replicador
+      REPLICATION_PASSWORD: ReplPass2025!
+    volumes:
+      - pgdata2:/var/lib/postgresql/data
+    networks:
+      - red_datos
+    depends_on:
+      - etcd
+
+  # 4. Enrutador Inteligente (HAProxy)
+  # Este es el único servicio que expone el puerto 5432 hacia afuera (o hacia otras redes Docker)
+  haproxy:
+    image: haproxy:alpine
+    container_name: c13_haproxy_db
+    restart: unless-stopped
+    volumes:
+      - ./haproxy/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg:ro
+    ports:
+      - "15432:5432" # Expuesto al host local (como estaba el primary antes)
+      - "7000:7000"  # Panel de métricas de HAProxy
+    networks:
+      - red_datos
+    depends_on:
+      - patroni1
+      - patroni2
+
+  # 5. Inicializador de Base de Datos
+  db-init:
+    build:
+      context: ./db-init
+      dockerfile: Dockerfile
+    container_name: c14_db_init
+    environment:
+      PGHOST: haproxy
+      PGPORT: 5432
+      PGUSER: admin_salud
+      PGPASSWORD: SaludSegura2025!
+    networks:
+      - red_datos
+    depends_on:
+      - haproxy

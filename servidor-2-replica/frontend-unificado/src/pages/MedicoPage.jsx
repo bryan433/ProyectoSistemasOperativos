@@ -7,7 +7,7 @@ import { subscribeToTickets } from '../services/socket';
 const MedicoPage = () => {
   const [tickets, setTickets] = useState([]);
   const [ticketEnConsulta, setTicketEnConsulta] = useState(null);
-  const [alerta, setAlerta] = useState('');
+  const [showPopup, setShowPopup] = useState(false);
 
   const cargarTickets = async () => {
     const response = await api.getTicketsPendientes();
@@ -37,12 +37,6 @@ const MedicoPage = () => {
 
         return [...actuales, nuevoTicket];
       });
-
-      setAlerta(
-        `Nuevo ticket A-${String(nuevoTicket.numero_turno).padStart(3, '0')}`,
-      );
-
-      setTimeout(() => setAlerta(''), 4000);
     });
 
     return () => {
@@ -69,15 +63,33 @@ const MedicoPage = () => {
     await api.crearConsulta(datosConsulta);
     await api.finalizarTicket(ticketEnConsulta.id);
 
+    // Cierra el módulo de síntomas y limpia el ticket actual
     setTicketEnConsulta(null);
     await cargarTickets();
 
-    setAlerta('Consulta guardada y ticket finalizado');
-    setTimeout(() => setAlerta(''), 4000);
+    // Muestra el Pop Up de éxito
+    setShowPopup(true);
   };
 
   return (
     <div className="space-y-8">
+      {/* Pop Up de Éxito */}
+      {showPopup && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+          <div className="bg-white p-8 rounded-2xl shadow-xl max-w-sm text-center">
+            <div className="text-5xl mb-4">✅</div>
+            <h3 className="text-2xl font-bold text-[#141d23] mb-2">¡Atendido!</h3>
+            <p className="text-[#424752] mb-6">El paciente ha sido atendido con éxito y la consulta finalizó.</p>
+            <button 
+              onClick={() => setShowPopup(false)}
+              className="bg-[#0056b3] hover:bg-[#003f87] text-white px-6 py-2 rounded-lg font-bold w-full transition-colors"
+            >
+              Cerrar
+            </button>
+          </div>
+        </div>
+      )}
+
       <header className="flex items-center justify-between">
         <div>
           <h2 className="text-3xl font-bold text-[#141d23]">Módulo Médico</h2>
@@ -90,12 +102,6 @@ const MedicoPage = () => {
           {tickets.length} en espera
         </span>
       </header>
-
-      {alerta && (
-        <div className="bg-[#0056b3] text-white px-6 py-4 rounded-xl shadow">
-          {alerta}
-        </div>
-      )}
 
       {ticketEnConsulta && (
         <ConsultaForm

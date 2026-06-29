@@ -1,38 +1,40 @@
-[2026-05-30 00:20:41] ==========================================
-[2026-05-30 00:20:41] Iniciando proceso de respaldo
-[2026-05-30 00:20:41] Host BD: host.docker.internal:5432
-[2026-05-30 00:20:41] ==========================================
-[2026-05-30 00:20:41] Iniciando respaldo de: db_pagos_atencion -> db_pagos_atencion_20260530_002041.sql
-[2026-05-30 00:20:42]   ✓ Respaldo exitoso: db_pagos_atencion_20260530_002041.sql (12K)
-[2026-05-30 00:20:42] Iniciando respaldo de: db_medico -> db_medico_20260530_002041.sql
-[2026-05-30 00:20:42]   ✓ Respaldo exitoso: db_medico_20260530_002041.sql (20K)
-[2026-05-30 00:20:42] Limpiando respaldos antiguos (conservando últimos 24)...
-[2026-05-30 00:20:42]   db_pagos_atencion: 1 respaldo(s) almacenado(s)
-[2026-05-30 00:20:42]   db_medico: 1 respaldo(s) almacenado(s)
-[2026-05-30 00:20:42] Proceso de respaldo completado.
-[2026-05-30 00:20:42] 
-[2026-05-30 00:21:17] ==========================================
-[2026-05-30 00:21:17] Iniciando proceso de respaldo
-[2026-05-30 00:21:17] Host BD: host.docker.internal:5432
-[2026-05-30 00:21:17] ==========================================
-[2026-05-30 00:21:17] Iniciando respaldo de: db_pagos_atencion -> db_pagos_atencion_20260530_002117.sql
-[2026-05-30 00:21:17]   ✓ Respaldo exitoso: db_pagos_atencion_20260530_002117.sql (12K)
-[2026-05-30 00:21:17] Iniciando respaldo de: db_medico -> db_medico_20260530_002117.sql
-[2026-05-30 00:21:18]   ✓ Respaldo exitoso: db_medico_20260530_002117.sql (20K)
-[2026-05-30 00:21:18] Limpiando respaldos antiguos (conservando últimos 24)...
-[2026-05-30 00:21:18]   db_pagos_atencion: 2 respaldo(s) almacenado(s)
-[2026-05-30 00:21:18]   db_medico: 2 respaldo(s) almacenado(s)
-[2026-05-30 00:21:18] Proceso de respaldo completado.
-[2026-05-30 00:21:18] 
-[2026-05-30 00:21:31] ==========================================
-[2026-05-30 00:21:31] Iniciando proceso de respaldo
-[2026-05-30 00:21:31] Host BD: host.docker.internal:5432
-[2026-05-30 00:21:31] ==========================================
-[2026-05-30 00:21:31] Iniciando respaldo de: db_pagos_atencion -> db_pagos_atencion_20260530_002131.sql
-[2026-05-30 00:21:31]   ✓ Respaldo exitoso: db_pagos_atencion_20260530_002131.sql (12K)
-[2026-05-30 00:21:31] Iniciando respaldo de: db_medico -> db_medico_20260530_002131.sql
-[2026-05-30 00:21:31]   ✓ Respaldo exitoso: db_medico_20260530_002131.sql (20K)
-[2026-05-30 00:21:31] Limpiando respaldos antiguos (conservando últimos 24)...
-[2026-05-30 00:21:31]   db_pagos_atencion: 3 respaldo(s) almacenado(s)
-[2026-05-30 00:21:31]   db_medico: 3 respaldo(s) almacenado(s)
-[2026-05-30 00:21:31] Sincronizando respaldos con la carpeta local del host...
+[2026-06-29 16:25:22] ==========================================
+[2026-06-29 16:25:22] Iniciando proceso de respaldo
+[2026-06-29 16:25:22] Host BD: host.docker.internal:5432
+[2026-06-29 16:25:22] ==========================================
+[2026-06-29 16:25:22] Iniciando respaldo de: db_pagos_atencion -> db_pagos_atencion_20260629_162522.sql
+[2026-06-29 16:25:23]   ✗ ERROR al respaldar: db_pagos_atencion
+[2026-06-29 16:25:23] Iniciando respaldo de: db_medico -> db_medico_20260629_162522.sql
+[2026-06-29 16:25:23]   ✗ ERROR al respaldar: db_medico
+[2026-06-29 16:25:23] Limpiando respaldos antiguos (conservando últimos 24)...
+[2026-06-29 16:25:23]   db_pagos_atencion: 0 respaldo(s) almacenado(s)
+[2026-06-29 16:25:23]   db_medico: 0 respaldo(s) almacenado(s)
+[2026-06-29 16:25:23] Sincronizando respaldos con la carpeta local del host...
+[2026-06-29 16:25:23] Proceso de respaldo completado.
+[2026-06-29 16:25:23] 
+[2026-06-29 16:25:52] ==========================================
+[2026-06-29 16:25:52] Iniciando proceso de respaldo
+[2026-06-29 16:25:52] Host BD: host.docker.internal:5432
+[2026-06-29 16:25:52] ==========================================
+[2026-06-29 16:25:52] Iniciando respaldo de: db_pagos_atencion -> db_pagos_atencion_20260629_162552.sql
+[2026-06-29 16:25:53]   ✗ ERROR al respaldar: db_pagos_atencion
+[2026-06-29 16:25:53] Iniciando respaldo de: db_medico -> db_medico_20260629_162552.sql
+[2026-06-29 16:25:53]   ✗ ERROR al respaldar: db_medico
+[2026-06-29 16:25:53] Limpiando respaldos antiguos (conservando últimos 24)...
+[2026-06-29 16:25:53]   db_pagos_atencion: 0 respaldo(s) almacenado(s)
+[2026-06-29 16:25:53]   db_medico: 0 respaldo(s) almacenado(s)
+[2026-06-29 16:25:53] Sincronizando respaldos con la carpeta local del host...
+[2026-06-29 16:25:53] Proceso de respaldo completado.
+[2026-06-29 16:25:53] 
+[2026-06-29 17:00:01] ==========================================
+[2026-06-29 17:00:01] ==========================================
+[2026-06-29 17:00:01] Iniciando proceso de respaldo
+[2026-06-29 17:00:01] Iniciando proceso de respaldo
+[2026-06-29 17:00:01] Host BD: :
+[2026-06-29 17:00:01] Host BD: :
+[2026-06-29 17:00:01] ==========================================
+[2026-06-29 17:00:01] ==========================================
+[2026-06-29 17:00:01] Limpiando respaldos antiguos (conservando últimos 24)...
+[2026-06-29 17:00:01] Limpiando respaldos antiguos (conservando últimos 24)...
+[2026-06-29 17:00:01] Sincronizando respaldos con la carpeta local del host...
+[2026-06-29 17:00:01] Sincronizando respaldos con la carpeta local del host...

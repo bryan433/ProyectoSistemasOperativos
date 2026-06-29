@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS tickets (
     paciente_id     INTEGER NOT NULL REFERENCES pacientes(id) ON DELETE CASCADE,
     numero_turno    INTEGER NOT NULL,             -- Número visible en pantalla (ej: 42)
     estado          VARCHAR(20) NOT NULL DEFAULT 'esperando'
-                    CHECK (estado IN ('esperando', 'llamado', 'atendido', 'cancelado')),
+                    CHECK (estado IN ('esperando', 'llamado', 'en_consulta', 'atendido', 'finalizado', 'cancelado')),
     fecha_creacion  TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
     fecha_llamado   TIMESTAMP WITH TIME ZONE,     -- Cuando el médico lo llamó
     fecha_atencion  TIMESTAMP WITH TIME ZONE      -- Cuando se marcó como atendido
