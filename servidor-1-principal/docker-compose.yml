@@ -53,7 +53,7 @@ services:
       - "3001:3001"
     environment:
       - PORT=3001
-      - DATABASE_URL=postgresql://admin_salud:SaludSegura2025!@postgres-primary:5432/db_pagos_atencion
+      - DATABASE_URL=postgresql://admin_salud:SaludSegura2025!@haproxy:5432/db_pagos_atencion
     networks:
       - red_app
       - red_datos
@@ -69,7 +69,7 @@ services:
       - "3002:3002"
     environment:
       - PORT=3002
-      - DATABASE_URL=postgresql://admin_salud:SaludSegura2025!@postgres-primary:5432/db_medico
+      - DATABASE_URL=postgresql://admin_salud:SaludSegura2025!@haproxy:5432/db_medico
     networks:
       - red_app
       - red_datos

@@ -22,6 +22,7 @@ const ConsultaForm = ({ ticket, onGuardar, onCancelar }) => {
     onGuardar({
       paciente_id: ticket.paciente_id,
       medico_id: 1,
+      paciente_data: ticket.paciente,
       ...form,
     });
   };

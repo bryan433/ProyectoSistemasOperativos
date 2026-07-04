@@ -1,0 +1,57 @@
+scope: salud_cluster
+namespace: /db/
+name: ${PATRONI_NAME}
+
+restapi:
+  listen: ${PATRONI_RESTAPI_LISTEN}
+  connect_address: ${PATRONI_NAME}:8008
+
+etcd3:
+  host: ${ETCD_HOST}
+
+bootstrap:
+  dcs:
+    ttl: 30
+    loop_wait: 10
+    retry_timeout: 10
+    maximum_lag_on_failover: 1048576
+    postgresql:
+      use_pg_rewind: true
+      use_slots: true
+      parameters:
+        wal_level: replica
+        hot_standby: "on"
+        wal_keep_size: 64MB
+        max_wal_senders: 5
+        max_replication_slots: 5
+  initdb:
+    - encoding: UTF8
+    - data-checksums
+  users:
+    ${POSTGRES_USER}:
+      password: ${POSTGRES_PASSWORD}
+      options:
+        - superuser
+    ${REPLICATION_USER}:
+      password: ${REPLICATION_PASSWORD}
+      options:
+        - replication
+
+postgresql:
+  listen: ${PATRONI_POSTGRES_LISTEN}
+  connect_address: ${PATRONI_NAME}:5432
+  data_dir: /var/lib/postgresql/data/pgdata
+  bin_dir: /usr/lib/postgresql/15/bin
+  pgpass: /tmp/pgpass
+  authentication:
+    replication:
+      username: ${REPLICATION_USER}
+      password: ${REPLICATION_PASSWORD}
+    superuser:
+      username: ${POSTGRES_USER}
+      password: ${POSTGRES_PASSWORD}
+  pg_hba:
+    - host replication ${REPLICATION_USER} 0.0.0.0/0 md5
+    - host all all 0.0.0.0/0 md5
+  parameters:
+    unix_socket_directories: /var/run/postgresql

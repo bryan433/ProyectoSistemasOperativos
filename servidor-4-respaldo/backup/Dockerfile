@@ -9,7 +9,10 @@ COPY entrypoint.sh /entrypoint.sh
 COPY crontab.txt /etc/cron.d/backup-cron
 
 RUN chmod +x /usr/local/bin/backup.sh /entrypoint.sh
+RUN sed -i 's/\r$//' /entrypoint.sh
+RUN sed -i 's/\r$//' /usr/local/bin/backup.sh
 RUN chmod 0644 /etc/cron.d/backup-cron
+RUN sed -i 's/\r$//' /etc/cron.d/backup-cron
 RUN crontab /etc/cron.d/backup-cron
 
 # Crear directorio de backups

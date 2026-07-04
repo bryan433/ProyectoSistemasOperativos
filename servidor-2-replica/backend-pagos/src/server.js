@@ -39,6 +39,13 @@ app.get('/', (req, res) => {
   });
 });
 
+app.get('/health', (req, res) => {
+  res.status(200).json({
+    status: 'OK',
+    service: 'backend-pagos',
+  });
+});
+
 app.use('/api/pacientes', pacientesRoutes);
 app.use('/api/pagos', pagosRoutes);
 app.use('/api/tickets', ticketsRoutes);
