@@ -28,6 +28,14 @@ psql -h "$PGHOST" -p "$PGPORT" -U "$PGUSER" -d db_pagos_atencion -f /scripts/02_
 echo ">>> Ejecutando: 03_schema_medico.sql..."
 psql -h "$PGHOST" -p "$PGPORT" -U "$PGUSER" -d db_medico -f /scripts/03_schema_medico.sql
 
+# Crear la tercera base de datos (Laboratorio)
+echo ">>> Ejecutando: 04_create_db_laboratorio.sql..."
+psql -h "$PGHOST" -p "$PGPORT" -U "$PGUSER" -d postgres -f /scripts/04_create_db_laboratorio.sql || echo "La DB db_laboratorio ya existe."
+
+# Poblar tercera base de datos
+echo ">>> Ejecutando: 05_schema_laboratorio.sql..."
+psql -h "$PGHOST" -p "$PGPORT" -U "$PGUSER" -d db_laboratorio -f /scripts/05_schema_laboratorio.sql
+
 echo ">>> ¡Inicialización de base de datos finalizada con éxito!"
 # Mantener el contenedor vivo o salir. Saldremos para que compose lo marque como 'exited' de forma limpia.
 exit 0

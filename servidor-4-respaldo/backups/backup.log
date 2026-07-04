@@ -38,3 +38,89 @@
 [2026-06-29 17:00:01] Limpiando respaldos antiguos (conservando últimos 24)...
 [2026-06-29 17:00:01] Sincronizando respaldos con la carpeta local del host...
 [2026-06-29 17:00:01] Sincronizando respaldos con la carpeta local del host...
+[2026-06-29 17:00:01] Proceso de respaldo completado.
+[2026-06-29 17:00:01] Proceso de respaldo completado.
+[2026-06-29 17:00:01] 
+[2026-06-29 17:00:01] 
+[2026-07-04 01:24:39] ==========================================
+[2026-07-04 01:24:39] Iniciando proceso de respaldo
+[2026-07-04 01:24:39] Host BD: host.docker.internal:5432
+[2026-07-04 01:24:39] ==========================================
+[2026-07-04 01:24:39] Iniciando respaldo de: db_pagos_atencion -> db_pagos_atencion_20260704_012439.sql
+[2026-07-04 01:24:39]   ✗ ERROR al respaldar: db_pagos_atencion
+[2026-07-04 01:24:39] Iniciando respaldo de: db_medico -> db_medico_20260704_012439.sql
+[2026-07-04 01:24:39]   ✗ ERROR al respaldar: db_medico
+[2026-07-04 01:24:39] Limpiando respaldos antiguos (conservando últimos 24)...
+[2026-07-04 01:24:39]   db_pagos_atencion: 0 respaldo(s) almacenado(s)
+[2026-07-04 01:24:39]   db_medico: 0 respaldo(s) almacenado(s)
+[2026-07-04 01:24:39] Sincronizando respaldos con la carpeta local del host...
+[2026-07-04 01:24:39] Proceso de respaldo completado.
+[2026-07-04 01:24:39] 
+[2026-07-04 01:43:44] ==========================================
+[2026-07-04 01:43:44] Iniciando proceso de respaldo
+[2026-07-04 01:43:44] Host BD: host.docker.internal:5432
+[2026-07-04 01:43:44] ==========================================
+[2026-07-04 01:43:44] Iniciando respaldo de: db_pagos_atencion -> db_pagos_atencion_20260704_014344.sql
+[2026-07-04 01:43:44]   ✗ ERROR al respaldar: db_pagos_atencion
+[2026-07-04 01:43:44] Iniciando respaldo de: db_medico -> db_medico_20260704_014344.sql
+[2026-07-04 01:43:45]   ✗ ERROR al respaldar: db_medico
+[2026-07-04 01:43:45] Limpiando respaldos antiguos (conservando últimos 24)...
+[2026-07-04 01:43:45]   db_pagos_atencion: 0 respaldo(s) almacenado(s)
+[2026-07-04 01:43:45]   db_medico: 0 respaldo(s) almacenado(s)
+[2026-07-04 01:43:45] Sincronizando respaldos con la carpeta local del host...
+[2026-07-04 01:43:45] Proceso de respaldo completado.
+[2026-07-04 01:43:45] 
+[2026-07-04 01:45:49] ==========================================
+[2026-07-04 01:45:49] Iniciando proceso de respaldo
+[2026-07-04 01:45:49] Host BD: host.docker.internal:5432
+[2026-07-04 01:45:49] ==========================================
+[2026-07-04 01:45:49] Iniciando respaldo de: db_pagos_atencion -> db_pagos_atencion_20260704_014549.sql
+[2026-07-04 01:45:49]   ✗ ERROR al respaldar: db_pagos_atencion
+[2026-07-04 01:45:49] Iniciando respaldo de: db_medico -> db_medico_20260704_014549.sql
+[2026-07-04 01:45:50]   ✗ ERROR al respaldar: db_medico
+[2026-07-04 01:45:50] Limpiando respaldos antiguos (conservando últimos 24)...
+[2026-07-04 01:45:50]   db_pagos_atencion: 0 respaldo(s) almacenado(s)
+[2026-07-04 01:45:50]   db_medico: 0 respaldo(s) almacenado(s)
+[2026-07-04 01:45:50] Sincronizando respaldos con la carpeta local del host...
+[2026-07-04 01:45:50] Proceso de respaldo completado.
+[2026-07-04 01:45:50] 
+[2026-07-04 01:49:52] ==========================================
+[2026-07-04 01:49:52] Iniciando proceso de respaldo
+[2026-07-04 01:49:52] Host BD: host.docker.internal:5432
+[2026-07-04 01:49:52] ==========================================
+[2026-07-04 01:49:52] Iniciando respaldo de: db_pagos_atencion -> db_pagos_atencion_20260704_014952.sql
+[2026-07-04 01:49:52]   ✗ ERROR al respaldar: db_pagos_atencion
+[2026-07-04 01:49:52] Iniciando respaldo de: db_medico -> db_medico_20260704_014952.sql
+[2026-07-04 01:49:52]   ✗ ERROR al respaldar: db_medico
+[2026-07-04 01:49:52] Limpiando respaldos antiguos (conservando últimos 24)...
+[2026-07-04 01:49:52]   db_pagos_atencion: 0 respaldo(s) almacenado(s)
+[2026-07-04 01:49:52]   db_medico: 0 respaldo(s) almacenado(s)
+[2026-07-04 01:49:52] Sincronizando respaldos con la carpeta local del host...
+[2026-07-04 01:49:52] Proceso de respaldo completado.
+[2026-07-04 01:49:52] 
+[2026-07-04 01:52:34] ==========================================
+[2026-07-04 01:52:34] Iniciando proceso de respaldo
+[2026-07-04 01:52:34] Host BD: host.docker.internal:5432
+[2026-07-04 01:52:34] ==========================================
+[2026-07-04 01:52:34] Iniciando respaldo de: db_pagos_atencion -> db_pagos_atencion_20260704_015234.sql
+[2026-07-04 01:52:34]   ✗ ERROR al respaldar: db_pagos_atencion
+[2026-07-04 01:52:34] Iniciando respaldo de: db_medico -> db_medico_20260704_015234.sql
+[2026-07-04 01:52:34]   ✗ ERROR al respaldar: db_medico
+[2026-07-04 01:52:34] Limpiando respaldos antiguos (conservando últimos 24)...
+[2026-07-04 01:52:34]   db_pagos_atencion: 0 respaldo(s) almacenado(s)
+[2026-07-04 01:52:34]   db_medico: 0 respaldo(s) almacenado(s)
+[2026-07-04 01:52:34] Sincronizando respaldos con la carpeta local del host...
+[2026-07-04 01:52:34] Proceso de respaldo completado.
+[2026-07-04 01:52:34] 
+[2026-07-04 02:00:01] ==========================================
+[2026-07-04 02:00:01] ==========================================
+[2026-07-04 02:00:01] Iniciando proceso de respaldo
+[2026-07-04 02:00:01] Iniciando proceso de respaldo
+[2026-07-04 02:00:01] Host BD: :
+[2026-07-04 02:00:01] Host BD: :
+[2026-07-04 02:00:01] ==========================================
+[2026-07-04 02:00:01] ==========================================
+[2026-07-04 02:00:01] Limpiando respaldos antiguos (conservando últimos 24)...
+[2026-07-04 02:00:01] Limpiando respaldos antiguos (conservando últimos 24)...
+[2026-07-04 02:00:01] Sincronizando respaldos con la carpeta local del host...
+[2026-07-04 02:00:01] Sincronizando respaldos con la carpeta local del host...
