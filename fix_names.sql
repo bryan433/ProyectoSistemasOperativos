@@ -1,0 +1,1 @@
+﻿UPDATE "Machine" SET name = 'Máquina 1' WHERE id = 1; UPDATE "Machine" SET name = 'Máquina 2' WHERE id = 2; UPDATE "Machine" SET name = 'Máquina 3' WHERE id = 3; UPDATE "Machine" SET name = 'Máquina 4' WHERE id = 4;

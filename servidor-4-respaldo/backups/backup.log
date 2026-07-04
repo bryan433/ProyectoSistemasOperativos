@@ -66,3 +66,18 @@
 [2026-07-04 03:49:46]   db_pagos_atencion: 0 respaldo(s) almacenado(s)
 [2026-07-04 03:49:46]   db_medico: 0 respaldo(s) almacenado(s)
 [2026-07-04 03:49:46] Sincronizando respaldos con la carpeta local del host...
+[2026-07-04 03:49:46] Proceso de respaldo completado.
+[2026-07-04 03:49:46] 
+[2026-07-04 04:00:01] ==========================================
+[2026-07-04 04:00:01] ==========================================
+[2026-07-04 04:00:01] Iniciando proceso de respaldo
+[2026-07-04 04:00:01] Iniciando proceso de respaldo
+[2026-07-04 04:00:01] Host BD: :
+[2026-07-04 04:00:01] Host BD: :
+[2026-07-04 04:00:01] ==========================================
+[2026-07-04 04:00:01] ==========================================
+[2026-07-04 04:00:01] Limpiando respaldos antiguos (conservando últimos 24)...
+[2026-07-04 04:00:01] Limpiando respaldos antiguos (conservando últimos 24)...
+[2026-07-04 04:00:01] Sincronizando respaldos con la carpeta local del host...
+[2026-07-04 04:00:01] Sincronizando respaldos con la carpeta local del host...
+

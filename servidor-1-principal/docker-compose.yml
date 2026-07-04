@@ -29,6 +29,7 @@ services:
       - frontend-unificado
       - backend-pagos
       - backend-ficha-medica
+      - backend-laboratorio
 
   #  Contenedor 2 — Frontend Unificado (React/Vite)
   frontend-unificado:
@@ -70,6 +71,22 @@ services:
     environment:
       - PORT=3002
       - DATABASE_URL=postgresql://admin_salud:SaludSegura2025!@haproxy:5432/db_medico
+    networks:
+      - red_app
+      - red_datos
+
+  #  Contenedor 6 — Backend Laboratorio
+  backend-laboratorio:
+    build:
+      context: ./backend-laboratorio
+      dockerfile: Dockerfile
+    container_name: c6_backend_laboratorio_s1
+    restart: unless-stopped
+    ports:
+      - "3005:3003"
+    environment:
+      - PORT=3003
+      - DATABASE_URL=postgresql://admin_salud:SaludSegura2025!@haproxy:5432/db_laboratorio
     networks:
       - red_app
       - red_datos
