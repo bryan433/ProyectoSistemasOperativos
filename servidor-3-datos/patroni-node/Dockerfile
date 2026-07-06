@@ -14,7 +14,7 @@ RUN /opt/patroni-venv/bin/pip install patroni[etcd] psycopg2-binary
 COPY patroni.yml.template /etc/patroni.yml.template
 COPY entrypoint.sh /entrypoint.sh
 
-RUN chmod +x /entrypoint.sh
+RUN chmod +x /entrypoint.sh && sed -i 's/\r$//' /entrypoint.sh
 RUN chown postgres:postgres /etc/patroni.yml.template
 
 # Ejecutar como usuario postgres para manejar la BD
