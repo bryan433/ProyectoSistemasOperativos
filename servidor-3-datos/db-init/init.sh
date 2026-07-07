@@ -3,8 +3,8 @@
 echo ">>> Esperando a que el clúster de Patroni esté listo en $PGHOST:$PGPORT..."
 
 # Esperar a que HAProxy pueda rutear al maestro y responda a ping
-until pg_isready -h "$PGHOST" -p "$PGPORT" -U "$PGUSER"; do
-  echo "La base de datos aún no está lista. Reintentando en 3 segundos..."
+until psql -h "$PGHOST" -p "$PGPORT" -U "$PGUSER" -d postgres -tAc "SELECT NOT pg_is_in_recovery();" | grep -q t; do
+  echo "La base aún no está en modo escritura. Reintentando en 3 segundos..."
   sleep 3
 done
 
