@@ -262,3 +262,33 @@
 [2026-07-06 07:00:01] Limpiando respaldos antiguos (conservando últimos 24)...
 [2026-07-06 07:00:01] Sincronizando respaldos con la carpeta local del host...
 [2026-07-06 07:00:01] Sincronizando respaldos con la carpeta local del host...
+[2026-07-06 07:00:01] Proceso de respaldo completado.
+[2026-07-06 07:00:01] Proceso de respaldo completado.
+[2026-07-06 07:00:01] 
+[2026-07-06 07:00:01] 
+[2026-07-07 01:01:24] ==========================================
+[2026-07-07 01:01:24] Iniciando proceso de respaldo
+[2026-07-07 01:01:24] Host BD: host.docker.internal:5432
+[2026-07-07 01:01:24] ==========================================
+[2026-07-07 01:01:24] Iniciando respaldo de: db_pagos_atencion -> db_pagos_atencion_20260707_010124.sql
+[2026-07-07 01:03:35]   ✗ ERROR al respaldar: db_pagos_atencion
+[2026-07-07 01:03:35] Iniciando respaldo de: db_medico -> db_medico_20260707_010124.sql
+[2026-07-07 01:05:48]   ✗ ERROR al respaldar: db_medico
+[2026-07-07 01:05:48] Limpiando respaldos antiguos (conservando últimos 24)...
+[2026-07-07 01:05:48]   db_pagos_atencion: 0 respaldo(s) almacenado(s)
+[2026-07-07 01:05:48]   db_medico: 0 respaldo(s) almacenado(s)
+[2026-07-07 01:05:48] Sincronizando respaldos con la carpeta local del host...
+[2026-07-07 01:05:48] Proceso de respaldo completado.
+[2026-07-07 01:05:48] 
+[2026-07-07 02:00:00] ==========================================
+[2026-07-07 02:00:00] ==========================================
+[2026-07-07 02:00:00] Iniciando proceso de respaldo
+[2026-07-07 02:00:00] Iniciando proceso de respaldo
+[2026-07-07 02:00:00] Host BD: :
+[2026-07-07 02:00:00] Host BD: :
+[2026-07-07 02:00:00] ==========================================
+[2026-07-07 02:00:00] ==========================================
+[2026-07-07 02:00:00] Limpiando respaldos antiguos (conservando últimos 24)...
+[2026-07-07 02:00:00] Limpiando respaldos antiguos (conservando últimos 24)...
+[2026-07-07 02:00:00] Sincronizando respaldos con la carpeta local del host...
+[2026-07-07 02:00:00] Sincronizando respaldos con la carpeta local del host...
